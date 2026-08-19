@@ -30,7 +30,7 @@ class GaleriaController extends SharedController
                 'urlCriar'   => Url::path('/galeria/criar'),
                 'editarUrl'  => Url::path('/galeria/editar'),
                 'deletarUrl' => Url::path('/galeria/deletar'),
-                'visualizar' => Url::path('/galeria/visualizar')
+                'visualizarUrl' => Url::path('/galeria/visualizar')
             ]);
 
             return self::getPage('GALERIA - LISTAGEM', $content, [
@@ -142,6 +142,29 @@ class GaleriaController extends SharedController
             Toast::error($e->getMessage());
             Logger::error($e->getMessage());
             Url::redirect('/galeria');
+        }
+    }
+    public function visualizar(){
+        $id = filter_input(INPUT_GET, "id");
+        
+           try {
+            $itens = $this->galeriaService->getById($id);
+           
+            $content = View::render('galeria/visualizar', [
+                'itens'      => $itens,
+                'voltarUrl'  => Url::path('/galeria'),
+                'visualizarUrl' => Url::path('/galeria/visualizar')
+            ]);
+
+            return self::getPage('GALERIA - LISTAGEM', $content, [
+                'showSidebar' => true,
+                'bodyClass'   => 'galeria-page',
+                'activePage'  => 'galeria',
+            ]);
+        } catch (GaleriaExecptions $e) {
+            Toast::error($e->getMessage());
+            Logger::error($e->getMessage());
+            Url::redirect('/home');
         }
     }
 }
