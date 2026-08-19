@@ -20,7 +20,10 @@
     --color-teal-300: oklch(85.5% 0.138 181.071);
     --color-teal-500: oklch(70.4% 0.14 182.503);
     --color-blue-50: oklch(97% 0.014 254.604);
+    --color-blue-100: oklch(93.2% 0.032 255.585);
+    --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-blue-700: oklch(48.8% 0.243 264.376);
+    --color-blue-800: oklch(42.4% 0.199 265.638);
     --color-violet-200: oklch(89.4% 0.057 293.283);
     --color-violet-300: oklch(81.1% 0.111 293.571);
     --color-rose-50: oklch(96.9% 0.015 12.422);
@@ -408,6 +411,9 @@
   .h-\[200px\] {
     height: 200px;
   }
+  .h-\[300px\] {
+    height: 300px;
+  }
   .h-\[calc\(100vh-4rem\)\] {
     height: calc(100vh - 4rem);
   }
@@ -441,6 +447,9 @@
   .w-\[100\%\] {
     width: 100%;
   }
+  .w-\[300px\] {
+    width: 300px;
+  }
   .w-\[min\(28rem\,calc\(100vw-2rem\)\)\] {
     width: min(28rem, calc(100vw - 2rem));
   }
@@ -471,6 +480,12 @@
   .flex-none {
     flex: none;
   }
+  .flex-shrink {
+    flex-shrink: 1;
+  }
+  .shrink-0 {
+    flex-shrink: 0;
+  }
   .border-collapse {
     border-collapse: collapse;
   }
@@ -495,6 +510,9 @@
   .cursor-not-allowed {
     cursor: not-allowed;
   }
+  .cursor-pointer {
+    cursor: pointer;
+  }
   .resize {
     resize: both;
   }
@@ -509,6 +527,9 @@
   }
   .flex-col-reverse {
     flex-direction: column-reverse;
+  }
+  .flex-wrap {
+    flex-wrap: wrap;
   }
   .items-center {
     align-items: center;
@@ -635,6 +656,9 @@
     --tw-border-style: dashed;
     border-style: dashed;
   }
+  .border-blue-100 {
+    border-color: var(--color-blue-100);
+  }
   .border-emerald-200 {
     border-color: var(--color-emerald-200);
   }
@@ -655,6 +679,15 @@
   }
   .bg-amber-100 {
     background-color: var(--color-amber-100);
+  }
+  .bg-blue-50 {
+    background-color: var(--color-blue-50);
+  }
+  .bg-blue-50\/50 {
+    background-color: color-mix(in srgb, oklch(97% 0.014 254.604) 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-blue-50) 50%, transparent);
+    }
   }
   .bg-emerald-50 {
     background-color: var(--color-emerald-50);
@@ -930,8 +963,14 @@
   .text-amber-700 {
     color: var(--color-amber-700);
   }
+  .text-blue-600 {
+    color: var(--color-blue-600);
+  }
   .text-blue-700 {
     color: var(--color-blue-700);
+  }
+  .text-blue-800 {
+    color: var(--color-blue-800);
   }
   .text-emerald-600 {
     color: var(--color-emerald-600);
@@ -1015,6 +1054,11 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
   .transition-colors {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -1048,6 +1092,9 @@
     .hover\:bg-blue-50:hover {
       background-color: var(--color-blue-50);
     }
+    .hover\:bg-rose-50:hover {
+      background-color: var(--color-rose-50);
+    }
     .hover\:bg-rose-700:hover {
       background-color: var(--color-rose-700);
     }
@@ -1075,6 +1122,9 @@
       .hover\:bg-white\/20:hover {
         background-color: color-mix(in oklab, var(--color-white) 20%, transparent);
       }
+    }
+    .hover\:text-rose-700:hover {
+      color: var(--color-rose-700);
     }
     .hover\:text-slate-600:hover {
       color: var(--color-slate-600);
@@ -1130,6 +1180,12 @@
     .sm\:flex {
       display: flex;
     }
+    .sm\:w-\[200px\] {
+      width: 200px;
+    }
+    .sm\:w-\[300px\] {
+      width: 300px;
+    }
     .sm\:w-auto {
       width: auto;
     }
@@ -1144,6 +1200,9 @@
     }
     .sm\:items-center {
       align-items: center;
+    }
+    .sm\:items-start {
+      align-items: flex-start;
     }
     .sm\:justify-between {
       justify-content: space-between;
@@ -1162,6 +1221,9 @@
     }
     .sm\:px-6 {
       padding-inline: calc(var(--spacing) * 6);
+    }
+    .sm\:text-left {
+      text-align: left;
     }
     .sm\:text-3xl {
       font-size: var(--text-3xl);

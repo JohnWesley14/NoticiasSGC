@@ -19,8 +19,14 @@ class GaleriaService implements IGaleriaService
 
     public function create(array $data): Galeria
     {
-         $agora = date('Y-m-d H:i:s');
+        $agora = date('Y-m-d H:i:s');
 
+        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+           
+            $url = FileService::save($_FILES['imagem'], 'galeria');
+        }else{
+            throw GaleriaExecptions::erroCriar();
+        }
         $novo = Galeria::fromArray([
             'titulo' => $data['titulo'],
             'legenda' => $data['legenda'] ?? null,
@@ -28,7 +34,7 @@ class GaleriaService implements IGaleriaService
             'created_at' => $agora,
             'updated_at' => $agora,
             'tipo' => $data['tipo'],
-            'caminho' => FileService::save($_FILES['imagem'], 'galeria')
+            'caminho' => $url ?? null, 
         ]);
         return $this->repository->create($novo);
     }
