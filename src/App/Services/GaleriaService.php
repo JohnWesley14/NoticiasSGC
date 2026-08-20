@@ -59,7 +59,7 @@ class GaleriaService implements IGaleriaService
             'titulo' => $data['titulo'],
             'legenda' => $data['legenda'] ?? null,
             'tipo' => $data['tipo'],
-            'status' => $existente->getStatus(),
+            'status' => $data['status'],
             'created_at' => $existente->getCreatedAt(),
             'updated_at' => date('Y-m-d H:i:s'),
             'caminho' => $url ?? null,
