@@ -31,7 +31,7 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
         </button>
     </div>
 
-    <nav class="flex h-[calc(100vh-4rem)] flex-col justify-between overflow-y-auto p-4">
+    <nav class="flex h-[calc(100%-4rem)] flex-col justify-between overflow-y-auto p-4">
         <ul class="space-y-1">
             <li>
                 <a href="<?= htmlspecialchars($urlDashboard) ?>"
