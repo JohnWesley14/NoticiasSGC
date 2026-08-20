@@ -46,6 +46,13 @@ class GaleriaService implements IGaleriaService
         if ($existente === null) {
             throw GaleriaExecptions::naoEncontrado();
         }
+        $url = $existente->getCaminho();
+        if($data['remover_imagem']){
+            if (isset($_FILES['imagem'])) {
+              FileService::delete($url);
+              $url = null;
+            }
+        }
 
         $atualizado = Galeria::fromArray([
             'id' => $id,
@@ -55,7 +62,7 @@ class GaleriaService implements IGaleriaService
             'status' => $existente->getStatus(),
             'created_at' => $existente->getCreatedAt(),
             'updated_at' => date('Y-m-d H:i:s'),
-            'caminho' => $_FILES['imagem']['name'] === "" ? $existente->getCaminho() : FileService::update($_FILES['imagem'], 'galeria', $existente->getCaminho()) 
+            'caminho' => $url ?? null,
         ]);
 
         return $this->repository->update($atualizado);

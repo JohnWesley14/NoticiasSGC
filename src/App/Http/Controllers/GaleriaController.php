@@ -114,7 +114,7 @@ class GaleriaController extends SharedController
         try {
             $request = (new GaleriaRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
-
+     
             $this->galeriaService->update((string) $validated['id'], $validated);
             Toast::success('Registro atualizado com sucesso!');
             Url::redirect('/galeria');

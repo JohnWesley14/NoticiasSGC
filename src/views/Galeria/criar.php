@@ -12,7 +12,7 @@
         <a href="<?= $voltarUrl ?>" class="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900">
             <i class="fa-solid fa-arrow-left"></i> Voltar
         </a>
-        <h1 class="mt-2 text-2xl font-semibold text-slate-900">Novo Registro</h1>
+        <h1 class="mt-2 text-2xl font-semibold text-slate-900">Nova Imagem</h1>
     </div>
 
     <div class="rounded-2xl border border-slate-200 bg-white p-6">
