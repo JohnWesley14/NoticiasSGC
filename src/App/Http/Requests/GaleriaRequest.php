@@ -16,7 +16,8 @@ class GaleriaRequest extends Request
             'titulo'    => ['required', 'string', 'min:3', 'max:150'],
             'legenda' => ['nullable', 'string', 'max:500'],
             'tipo' => ['nullable', 'string'],
-            'caminho' => ['nullable', 'fileType:jpg,jpeg,png,webp', 'fileSize:2048', ]
+            'caminho' => ['nullable', 'fileType:jpg,jpeg,png,webp', 'fileSize:2048' ],
+            'remover_imagem' => ['nullable', 'boolean']
         ];
     }
 
