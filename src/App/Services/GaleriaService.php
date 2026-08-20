@@ -75,8 +75,9 @@ class GaleriaService implements IGaleriaService
         if ($existente === null) {
             throw GaleriaExecptions::naoEncontrado();
         }
-
-        FileService::delete($existente->getCaminho());
+        if($existente->getCaminho()){
+            FileService::delete($existente->getCaminho());
+        }
 
         return $this->repository->delete($id);
     }
