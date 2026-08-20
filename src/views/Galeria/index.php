@@ -21,6 +21,16 @@
             Novo Registro
         </a>
     </div>
+    <div>
+        <label for="filterRole" class="text-sm font-medium text-slate-700">Filtrar</label>
+        <select id="filterRole" class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
+            <option value=''>Todos os tipos</option>
+            <option value="1">Esporte</option>
+            <option value="2">Natureza</option>
+            <option value="3">Automotivo</option>
+            <option value="4">Tecnologia</option>
+        </select>
+    </div>
 
     <?php if (empty($itens)) : ?>
         <div class="rounded-2xl border border-dashed border-slate-200 bg-white p-6 sm:p-10 text-center">
@@ -33,6 +43,7 @@
     <?php else : ?>
         <div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
+                
                 <table class="w-full text-sm whitespace-nowrap">
                     <thead>
                         <tr class="border-b border-slate-200 bg-slate-50/50">
@@ -43,10 +54,10 @@
                             <th class="px-5 py-3 text-right font-semibold text-slate-700">Ações</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-200">
+                    <tbody class="divide-y divide-slate-200" id="userTableBody">
                         <?php foreach ($itens as $item) : ?>
-                            <tr class="hover:bg-slate-50/50 transition-colors">
-                                <td class="px-5 py-4 font-medium text-slate-900"><?= htmlspecialchars($item->getTitulo()) ?></td>
+                            <tr class="hover:bg-slate-50/50 transition-colors" data-tipo="<?= ( htmlspecialchars($item->getTipo()) )?>">
+                                <td class="px-5 py-4 font-medium text-slate-900" ><?= htmlspecialchars($item->getTitulo()) ?></td>
 
                                 <td class="px-5 py-4 text-slate-600 max-w-[150px] sm:max-w-[200px] truncate" title="<?= htmlspecialchars($item->getLegenda() ?? '') ?>">
                                     <?= htmlspecialchars($item->getLegenda() ?? '—') ?>
@@ -96,3 +107,4 @@
         </div>
     <?php endif; ?>
 </div>
+<script src="public/js/galeria-filtrar.js" defer></script>

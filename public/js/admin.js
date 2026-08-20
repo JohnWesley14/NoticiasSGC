@@ -9,8 +9,9 @@ function filtrar() {
     const role   = filterRole.value;
     const status = filterStatus.value;
     let visible  = 0;
-
+    
     rows.forEach(row => {
+        
         const matchSearch = !search || row.dataset.nome.includes(search) || row.dataset.email.includes(search);
         const matchRole   = !role   || row.dataset.role   === role;
         const matchStatus = !status || row.dataset.status === status;
