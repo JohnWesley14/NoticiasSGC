@@ -37,6 +37,7 @@ CREATE TABLE `tb_usuarios` (
   CONSTRAINT `fk_user_perfil` FOREIGN KEY (`perfil_id`) REFERENCES `tb_perfis` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 -- Usuário admin padrão (senha: #Senha123 — TROQUE EM PRODUÇÃO)
 INSERT INTO `tb_usuarios` (id, nome, email, senha, perfil_id, status)
 VALUES (UUID(), 'Admin', 'admin@exemplo.com', '$2y$12$Xs6FoqmLknRXhnEeuqeb/OvvqEvjuSZ6ArHqov/gAtubm9b88KONC', 2, 1);

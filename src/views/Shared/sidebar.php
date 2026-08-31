@@ -6,11 +6,13 @@ $activeAdmin    = $activeAdmin ?? false;
 $activeExemplo  = $activeExemplo ?? false;
 $activeGaleria  = $activeGaleria ?? false;
 $activeConfig   = $activeConfig ?? false;
+$activeGraficos  = $activeGraficos ?? false;
 
 $urlDashboard = $urlDashboard ?? '';
 $urlAdmin     = $urlAdmin ?? '';
 $urlExemplo   = $urlExemplo ?? '';
 $urlGaleria   = $urlGaleria ?? '';
+$urlGraficos   = $urlGraficos ?? '';
 $urlConfig    = $urlConfig ?? '';
 $urlLogout    = $urlLogout ?? '';
 
@@ -52,19 +54,27 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
             <?php endif; ?>
 
             <!-- TODO: substitua este item pelo(s) módulo(s) do seu projeto -->
-            <li>
-                <a href="<?= htmlspecialchars($urlExemplo) ?>"
-                    class="<?= $activeExemplo ? $linkActive : $linkInactive ?>">
-                    <i class="fa-solid fa-layer-group text-base"></i>
-                    <span>Exemplo</span>
-                </a>
-            </li>
+           
 
             <li>
                 <a href="<?= htmlspecialchars($urlGaleria) ?>"
                     class="<?= $activeGaleria ? $linkActive : $linkInactive ?>">
                     <i class="fa-solid fa-layer-group text-base"></i>
                     <span>Galeria</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?= htmlspecialchars($urlGraficos) ?>"
+                    class="<?= $activeGraficos ? $linkActive : $linkInactive ?>">
+                    <i class="fa-solid fa-layer-group text-base"></i>
+                    <span>Graficos</span>
+                </a>
+            </li>
+             <li>
+                <a href="<?= htmlspecialchars($urlExemplo) ?>"
+                    class="<?= $activeExemplo ? $linkActive : $linkInactive ?>">
+                    <i class="fa-solid fa-layer-group text-base"></i>
+                    <span>Exemplo</span>
                 </a>
             </li>
         </ul>
