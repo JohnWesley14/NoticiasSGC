@@ -23,8 +23,8 @@ class GraficosController extends SharedController
     public function index(): string
     {
         try {
-            // $itens = $this->graficosService->getAll();
-            $itens1 = $this->graficosService->getInscricoesPorDia();
+        
+          
             $itens = [
                 'inscricoes_dia' => $this->graficosService->getInscricoesPorDia(),
                 'inscricoes_pcd' => $this->graficosService->getInscricoesPorPcd(),
