@@ -24,7 +24,12 @@ class GraficosController extends SharedController
     {
         try {
             // $itens = $this->graficosService->getAll();
-            $itens = $this->graficosService->getInscricoesPorDia();
+            $itens1 = $this->graficosService->getInscricoesPorDia();
+            $itens = [
+                'inscricoes_dia' => $this->graficosService->getInscricoesPorDia(),
+                'inscricoes_pcd' => $this->graficosService->getInscricoesPorPcd(),
+                'inscricoes_top' => $this->graficosService->getInscricoesPorTop(),
+            ];
             $content = View::render('Graficos/index', [
                 'itens'      => $itens,
                 'voltarUrl'  => Url::path('/home'),

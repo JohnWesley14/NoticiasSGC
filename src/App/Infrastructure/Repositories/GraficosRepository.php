@@ -113,4 +113,14 @@ class GraficosRepository implements IGraficosRepository
        
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getInscricoesPorPcd(): array{
+        $stmt = $this->conn->query("SELECT eh_pcd, count(*) as total from tb_inscricoes_cnh_social GROUP BY eh_pcd");
+       
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getInscricoesPorTop(): array{
+        $stmt = $this->conn->query("SELECT  RANK() OVER (ORDER BY count(*) desc) as ranking, cidade, count(*) as total from tb_inscricoes_cnh_social GROUP BY cidade order by total desc limit 5");
+       
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

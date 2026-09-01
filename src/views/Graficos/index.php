@@ -12,65 +12,88 @@
 <div class="space-y-6">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">Galeria</h1>
-            <p class="mt-1 text-sm text-slate-600">Gerencie os registros de Galeria</p>
+            <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">Gráficos</h1>
+            <p class="mt-1 text-sm text-slate-600">Veja os gráficos da CNH Social</p>
         </div>
-        <a href="<?= $urlCriar ?>"
-            class="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 transition-colors">
-            <i class="fa-solid fa-plus"></i>
-            Novo Registro
-        </a>
     </div>
+
     <div>
-        <label for="filterRole" class="text-sm font-medium text-slate-700">Filtrar</label>
-        <select id="filterRole" class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
-            <option value=''>Todos os tipos</option>
-            <option value="1">Esporte</option>
-            <option value="2">Natureza</option>
-            <option value="3">Automotivo</option>
-            <option value="4">Tecnologia</option>
+        <label for="selectGrafico" class="text-sm font-medium text-slate-700">Filtrar Gráfico</label>
+        <select id="selectGrafico" class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
+            <option value="inscricoes_dia">Inscrições por Dia</option>
+            <option value="inscricoes_pcd">Inscrições PCD</option>
+            <option value="inscricoes_top">Top Inscrições</option>
         </select>
     </div>
 
     <?php if (empty($itens)) : ?>
-
+        <p class="text-slate-500">Nenhum dado encontrado para gerar os gráficos.</p>
     <?php else : ?>
-       
-        
-         <div style="width: 600px; margin: 40px auto;">
-        <!-- Canvas onde o gráfico será desenhado -->
-        <canvas id="meuGrafico"></canvas>
-         </div>
-
+        <div style="width: 100%; max-width: 700px; margin: 20px auto;">
+            <canvas id="meuGrafico"></canvas>
+        </div>
     <?php endif; ?>
 </div>
-<script src="public/js/galeria-filtrar.js" defer></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const itens = <?php echo json_encode($itens ?? []); ?>;
-        console.log(itens);
-        console.log(itens[0]);
-    
-        const labels = itens.map(item => (item.data));
-        const dataValues = itens.map(item => Number(item.total));
+        const rawItens = <?php echo json_encode($itens ?? []); ?>;
+        let meuGrafico = null; 
 
-        const ctx = document.getElementById('meuGrafico');
+        const dadosGraficos = {
+            inscricoes_dia: {
+                titulo: 'Inscrições por Dia',
+                tipo: 'line',
+                labels: (rawItens.inscricoes_dia || []).map(item => item.data),
+                values: (rawItens.inscricoes_dia || []).map(item => Number(item.total))
+            },
+            inscricoes_pcd: {
+                titulo: 'Inscrições PCD',
+                tipo: 'bar', 
+                labels: (rawItens.inscricoes_pcd || []).map(item => item.eh_pcd == 1 ? 'PCD' : 'Não PCD'),
+                values: (rawItens.inscricoes_pcd || []).map(item => Number(item.total))
+            },
+            inscricoes_top: {
+                titulo: 'Top 5 Cidades com Mais Inscrições',
+                tipo: 'bar', // Recomendo 'bar' para ranking
+                labels: (rawItens.inscricoes_top || []).map(item => item.cidade),
+                labels: (rawItens.inscricoes_top || []).map(item => `${item.ranking}º ${item.cidade}`),
+                values: (rawItens.inscricoes_top || []).map(item => Number(item.total))
+            }
+        };
+
+        function carregarGrafico(chave) {
+            const config = dadosGraficos[chave];
+            const ctx = document.getElementById('meuGrafico');
+            console.log(rawItens);
         
-        if (ctx) {
-            new Chart(ctx, {
-                type: 'line',
+            if (!ctx || !config) return;
+
+            if (meuGrafico) {
+                meuGrafico.destroy();
+            }
+
+            meuGrafico = new Chart(ctx, {
+                type: config.tipo,
                 data: {
-                    labels: labels, 
+                    labels: config.labels,
                     datasets: [{
-                        label: 'Inscrições',
-                        data: dataValues,
-                        borderWidth: 1
+                        label: config.titulo,
+                        data: config.values,
+                        borderWidth: 2,
+                        borderColor: '#0284c7',
+                        backgroundColor: 'rgba(2, 132, 199, 0.2)'
                     }]
                 },
                 options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            displayColors: false
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true
@@ -79,5 +102,12 @@
                 }
             });
         }
+
+        const select = document.getElementById('selectGrafico');
+        select.addEventListener('change', (e) => {
+            carregarGrafico(e.target.value);
+        });
+
+        carregarGrafico(select.value);
     });
 </script>

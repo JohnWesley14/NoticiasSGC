@@ -79,4 +79,10 @@ class GraficosService implements IGraficosService
     public function getInscricoesPorDia(): array{
         return $this->repository->getInscricoesPorDia();
     }
+    public function getInscricoesPorPcd(): array{
+        return $this->repository->getInscricoesPorPcd();
+    }
+    public function getInscricoesPorTop(): array{
+        return $this->repository->getInscricoesPorTop();
+    }
 }
