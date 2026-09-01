@@ -107,4 +107,10 @@ class GraficosRepository implements IGraficosRepository
         $stmt = $this->conn->query('SELECT COUNT(*) FROM tb_exemplo');
         return (int) $stmt->fetchColumn();
     }
+
+    public function getInscricoesPorDia(): array{
+        $stmt = $this->conn->query("SELECT DATE(created_at) as data, count(*) as total from tb_inscricoes_cnh_social group by DATE(created_at) order by DATE(created_at)");
+       
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

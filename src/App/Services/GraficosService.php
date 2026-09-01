@@ -76,4 +76,7 @@ class GraficosService implements IGraficosService
     {
         return $this->repository->count();
     }
+    public function getInscricoesPorDia(): array{
+        return $this->repository->getInscricoesPorDia();
+    }
 }

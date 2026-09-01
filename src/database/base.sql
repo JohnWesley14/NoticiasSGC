@@ -80,3 +80,7 @@ CREATE TABLE `tb_galeria` (
     `caminho` VARCHAR(255),  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Queries para grafico
+
+SELECT nome_completo, cpf, email FROM tb_inscricoes_cnh_social LIMIT 200;

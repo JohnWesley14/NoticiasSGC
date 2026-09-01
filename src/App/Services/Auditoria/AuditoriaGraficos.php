@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Src\App\Services\Auditoria;
 
+use Override;
 use Src\App\Infrastructure\IRepositories\IGraficosRepository;
 use Src\App\Models\Graficos;
 use Src\App\Services\IServices\IAuditoriaService;
@@ -75,5 +76,9 @@ class AuditoriaGraficos implements IGraficosRepository
     public function count(): int
     {
         return $this->repository->count();
+    }
+    public function getInscricoesPorDia(): array
+    {
+        return $this->repository->getInscricoesPorDia();
     }
 }

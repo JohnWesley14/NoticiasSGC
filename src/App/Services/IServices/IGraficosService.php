@@ -14,4 +14,6 @@ interface IGraficosService
     public function getAll(): array;
     public function getById(string $id): ?Graficos;
     public function count(): int;
+    public function getInscricoesPorDia(): array;
+
 }

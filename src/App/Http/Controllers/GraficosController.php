@@ -23,7 +23,8 @@ class GraficosController extends SharedController
     public function index(): string
     {
         try {
-            $itens = $this->graficosService->getAll();
+            // $itens = $this->graficosService->getAll();
+            $itens = $this->graficosService->getInscricoesPorDia();
             $content = View::render('Graficos/index', [
                 'itens'      => $itens,
                 'voltarUrl'  => Url::path('/home'),
