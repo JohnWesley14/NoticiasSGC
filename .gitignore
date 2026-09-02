@@ -33,3 +33,5 @@ desktop.ini
 *.bak
 Limiting/appLimiting.txt
 public/uploads/galeria
+cache/*
+!cache/.gitkeep

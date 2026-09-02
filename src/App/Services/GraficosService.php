@@ -11,10 +11,36 @@ use Src\App\Services\IServices\IGraficosService;
 
 class GraficosService implements IGraficosService
 {
+    private string $caminhoCache = __DIR__ . '/../../../storage/cache/';
     public function __construct(
         private IGraficosRepository $repository
     ) {
+    
+        if(!is_dir($this->caminhoCache)){
+            mkdir($this->caminhoCache, 0775, true);
+        }
     }
+
+    private function lembrarCache(string $nomeArquivo, callable $queryBanco, int $tempoSegundos = 1800): array
+    {
+        $arquivo = $this->caminhoCache . $nomeArquivo . '.json';
+
+        // Verifica se o arquivo existe E se a última modificação dele ainda está no prazo (ex: 30 minutos)
+        if (file_exists($arquivo) && (time() - filemtime($arquivo) < $tempoSegundos)) {
+            // Se estiver no prazo, lê o arquivo, converte de volta pra array e retorna
+            $conteudo = file_get_contents($arquivo);
+            return json_decode($conteudo, true) ?: [];
+        }
+
+        // Se o arquivo não existir ou passou do tempo, ele roda a função com a query do banco
+        $dados = $queryBanco();
+
+        // Salva os dados fresquinhos no arquivo JSON para as próximas requisições
+        file_put_contents($arquivo, json_encode($dados));
+
+        return $dados;
+    }
+    
 
     public function create(array $data): Graficos
     {
@@ -77,12 +103,18 @@ class GraficosService implements IGraficosService
         return $this->repository->count();
     }
     public function getInscricoesPorDia(): array{
-        return $this->repository->getInscricoesPorDia();
+        return $this->lembrarCache('inscricoes_dia', function(){
+            return $this->repository->getInscricoesPorDia();
+        }, (60 * 60 * 24));
     }
     public function getInscricoesPorPcd(): array{
-        return $this->repository->getInscricoesPorPcd();
+        return $this->lembrarCache('inscricoes_pcd', function(){
+            return $this->repository->getInscricoesPorPcd();
+        }, (60 * 60 * 24));
     }
     public function getInscricoesPorTop(): array{
-        return $this->repository->getInscricoesPorTop();
+        return $this->lembrarCache('inscricoes_top', function(){
+            return $this->repository->getInscricoesPorTop();
+        }, (60 * 60 * 24));
     }
 }
