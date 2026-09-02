@@ -18,4 +18,5 @@ interface IGraficosRepository
     public function getInscricoesPorDia(): array;
     public function getInscricoesPorPcd(): array;
     public function getInscricoesPorTop(): array;
+    public function getInscricoesPorPercentualDia(): array;
 }

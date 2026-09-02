@@ -89,4 +89,8 @@ class AuditoriaGraficos implements IGraficosRepository
     {
         return $this->repository->getInscricoesPorTop();
     }
+    public function getInscricoesPorPercentualDia(): array
+    {
+        return $this->repository->getInscricoesPorPercentualDia();
+    }
 }

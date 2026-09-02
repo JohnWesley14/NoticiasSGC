@@ -29,6 +29,7 @@ class GraficosController extends SharedController
                 'inscricoes_dia' => $this->graficosService->getInscricoesPorDia(),
                 'inscricoes_pcd' => $this->graficosService->getInscricoesPorPcd(),
                 'inscricoes_top' => $this->graficosService->getInscricoesPorTop(),
+                'inscricoes_percentual_dia' => $this->graficosService->getInscricoesPorPercentualDia(),
             ];
             $content = View::render('Graficos/index', [
                 'itens'      => $itens,

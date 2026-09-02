@@ -35,7 +35,7 @@ class GraficosService implements IGraficosService
         // Se o arquivo não existir ou passou do tempo, ele roda a função com a query do banco
         $dados = $queryBanco();
 
-        // Salva os dados fresquinhos no arquivo JSON para as próximas requisições
+       
         file_put_contents($arquivo, json_encode($dados));
 
         return $dados;
@@ -117,4 +117,10 @@ class GraficosService implements IGraficosService
             return $this->repository->getInscricoesPorTop();
         }, (60 * 60 * 24));
     }
+    public function getInscricoesPorPercentualDia(): array{
+        return $this->lembrarCache('inscricoes_percentual_dia', function(){
+            return $this->repository->getInscricoesPorPercentualDia();
+        }, (60 * 60 * 24));
+    }
+
 }

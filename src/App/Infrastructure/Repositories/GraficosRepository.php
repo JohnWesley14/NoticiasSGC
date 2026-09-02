@@ -123,4 +123,9 @@ class GraficosRepository implements IGraficosRepository
        
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getInscricoesPorPercentualDia(): array{
+        $stmt = $this->conn->query("SELECT DATE(created_at) as data,  count(*) as inscritos, (count(*) * 100 / (SELECT count(*) from tb_inscricoes_cnh_social)) as porcentagem from tb_inscricoes_cnh_social GROUP BY DATE(created_at) ORDER BY DATE(created_at) asc");
+       
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

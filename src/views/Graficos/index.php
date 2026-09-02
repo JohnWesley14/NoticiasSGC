@@ -23,6 +23,7 @@
             <option value="inscricoes_dia">Inscrições por Dia</option>
             <option value="inscricoes_pcd">Inscrições PCD</option>
             <option value="inscricoes_top">Top Inscrições</option>
+            <option value="inscricoes_percentual_dia">Percentual Inscrições</option>
         </select>
     </div>
 
@@ -61,6 +62,13 @@
                 labels: (rawItens.inscricoes_top || []).map(item => item.cidade),
                 labels: (rawItens.inscricoes_top || []).map(item => `${item.ranking}º ${item.cidade}`),
                 values: (rawItens.inscricoes_top || []).map(item => Number(item.total))
+            },
+            inscricoes_percentual_dia: {
+                titulo: 'Percentual de inscrições por cidade',
+                tipo: 'bar', 
+               
+                labels: (rawItens.inscricoes_percentual_dia || []).map(item => item.cidade || item.data),
+                values: (rawItens.inscricoes_percentual_dia || []).map(item => Number(item.porcentagem).toFixed(2)) 
             }
         };
 
