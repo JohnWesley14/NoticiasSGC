@@ -62,8 +62,6 @@ class SharedController
             'activeAdmin'      => $activePage === 'admin',
             'activeExemplo'    => $activePage === 'exemplo',
             // [HOOK_SIDEBAR_VARS]
-        'activeProduto' => $activePage === 'produto',
-        'urlProduto'    => \Src\App\Utils\Url::path('/produto'),
             'activeGaleria'    => $activePage === 'galeria',
             'activeConfig'     => $activePage === 'configuracoes',
             'urlDashboard'     => Url::path('/home'),
