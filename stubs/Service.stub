@@ -1,0 +1,79 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Src\App\Services;
+
+use Src\App\Http\Exceptions\{{Modulo}}\{{Modulo}}Exception;
+use Src\App\Infrastructure\IRepositories\I{{Modulo}}Repository;
+use Src\App\Models\{{Modulo}};
+use Src\App\Services\IServices\I{{Modulo}}Service;
+
+class {{Modulo}}Service implements I{{Modulo}}Service
+{
+    public function __construct(
+        private I{{Modulo}}Repository $repository
+    ) {
+    }
+
+    public function create(array $data): {{Modulo}}
+    {
+        $agora = date('Y-m-d H:i:s');
+
+        $novo = {{Modulo}}::fromArray([
+            'titulo' => $data['titulo'],
+            'descricao' => $data['descricao'] ?? null,
+            'status' => true,
+            'created_at' => $agora,
+            'updated_at' => $agora,
+        ]);
+
+        return $this->repository->create($novo);
+    }
+
+    public function update(string $id, array $data): {{Modulo}}
+    {
+        $existente = $this->repository->getById($id);
+
+        if ($existente === null) {
+            throw {{Modulo}}Exception::naoEncontrado();
+        }
+
+        $atualizado = {{Modulo}}::fromArray([
+            'id' => $id,
+            'titulo' => $data['titulo'],
+            'descricao' => $data['descricao'] ?? null,
+            'status' => $existente->getStatus(),
+            'created_at' => $existente->getCreatedAt(),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return $this->repository->update($atualizado);
+    }
+
+    public function delete(string $id): bool
+    {
+        $existente = $this->repository->getById($id);
+
+        if ($existente === null) {
+            throw {{Modulo}}Exception::naoEncontrado();
+        }
+
+        return $this->repository->delete($id);
+    }
+
+    public function getAll(): array
+    {
+        return $this->repository->getAll();
+    }
+
+    public function getById(string $id): ?{{Modulo}}
+    {
+        return $this->repository->getById($id);
+    }
+
+    public function count(): int
+    {
+        return $this->repository->count();
+    }
+}

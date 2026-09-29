@@ -52,6 +52,7 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
             <?php endif; ?>
 
             <!-- TODO: substitua este item pelo(s) módulo(s) do seu projeto -->
+            <!-- [HOOK_SIDEBAR] -->
             <li>
                 <a href="<?= htmlspecialchars($urlExemplo) ?>"
                     class="<?= $activeExemplo ? $linkActive : $linkInactive ?>">

@@ -61,6 +61,7 @@ class SharedController
             'activeDashboard'  => $activePage === 'dashboard',
             'activeAdmin'      => $activePage === 'admin',
             'activeExemplo'    => $activePage === 'exemplo',
+            // [HOOK_SIDEBAR_VARS]
             'activeGaleria'    => $activePage === 'galeria',
             'activeConfig'     => $activePage === 'configuracoes',
             'urlDashboard'     => Url::path('/home'),
@@ -69,6 +70,7 @@ class SharedController
             'urlAdmin'         => Url::path('/admin'),
             'urlConfig'        => Url::path('/configuracoes'),
             'urlLogout'        => Url::path('/logout'),
+            
         ]);
     }
 }

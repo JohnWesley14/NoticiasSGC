@@ -1,0 +1,15 @@
+<?php
+/**
+ * @var string $voltarUrl
+ * @var string $urlSalvar
+ */
+?>
+<!-- Estrutura base da view criar para {{Modulo}} -->
+<div class="space-y-6">
+    <h1 class="text-3xl font-semibold">{{Modulo}} - Criar</h1>
+    <form action="<?= $urlSalvar ?>" method="POST">
+        <?= csrf() ?>
+        <!-- Adicione os campos aqui -->
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2">Salvar</button>
+    </form>
+</div>

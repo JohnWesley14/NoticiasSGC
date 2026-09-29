@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Src\App\Http\Exceptions\{{Modulo}};
+
+use Src\App\Enums\HttpStatus;
+use Src\App\Http\Exceptions\DomainException;
+
+class {{Modulo}}Exception extends DomainException
+{
+    public function __construct(string $mensagem = '', int $statusCode = HttpStatus::BAD_REQUEST->value)
+    {
+        parent::__construct($mensagem);
+        $this->statusCode = $statusCode;
+    }
+
+    public static function naoEncontrado(string $mensagem = '{{Modulo}} não encontrado.'): self
+    {
+        return new self($mensagem, HttpStatus::NOT_FOUND->value);
+    }
+
+    public static function erroCriar(): self
+    {
+        return new self('Erro ao criar o registro.', HttpStatus::UNPROCESSABLE_ENTITY->value);
+    }
+}
