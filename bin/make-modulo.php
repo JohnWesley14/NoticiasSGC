@@ -28,7 +28,7 @@ $diretorios = [
     'IServices'     => __DIR__ . '/../src/App/Services/IServices/',
     'Exceptions'    => __DIR__ . '/../src/App/Http/Exceptions/' . $nomeClasse . '/',
     'Requests'      => __DIR__ . '/../src/App/Http/Requests/',
-    'Views'         => __DIR__ . '/../views/' . $nomeClasse . '/',
+    'Views'         => __DIR__ . '/../src/views/' . $nomeClasse . '/',
     'Models'        => __DIR__ . '/../src/App/Models/',
     'Routes'        => __DIR__ . '/../src/routes/modulos/',
     'DiConfig'      => __DIR__ . '/../src/config/dependencies/modulos/',
@@ -127,7 +127,7 @@ foreach ($arquivos as $stub => $destino) {
 // --- INJEÇÃO EM ARQUIVOS EXISTENTES ---
 
 // 1. Injetar na Sidebar
-$sidebarPath = __DIR__ . '/../views/Shared/sidebar.php';
+$sidebarPath = __DIR__ . '/../src/views/Shared/sidebar.php';
 $hookSidebar = '<!-- [HOOK_SIDEBAR] -->';
 $htmlSidebar = <<<HTML
     <li>
@@ -150,5 +150,14 @@ $varsController = <<<PHP
 PHP;
 
 injetarConteudo($sharedControllerPath, $hookController, $varsController);
+
+// 3. Injetar Variáveis Padrão na Sidebar
+$hookSidebarDefaults = '// [HOOK_SIDEBAR_DEFAULTS]';
+$varsSidebarDefaults = <<<PHP
+\$active{$nomeClasse} = \$active{$nomeClasse} ?? false;
+\$url{$nomeClasse}    = \$url{$nomeClasse} ?? '';
+PHP;
+
+injetarConteudo($sidebarPath, $hookSidebarDefaults, $varsSidebarDefaults);
 
 echo "\n\033[36mTodos os arquivos do módulo '{$nomeClasse}' foram gerados com sucesso!\033[0m\n";

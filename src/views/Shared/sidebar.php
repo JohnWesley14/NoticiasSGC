@@ -13,6 +13,10 @@ $urlExemplo   = $urlExemplo ?? '';
 $urlGaleria   = $urlGaleria ?? '';
 $urlConfig    = $urlConfig ?? '';
 $urlLogout    = $urlLogout ?? '';
+ 
+// [HOOK_SIDEBAR_DEFAULTS]
+$activeProduto = $activeProduto ?? false;
+$urlProduto    = $urlProduto ?? '';
 
 $linkBase     = 'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors';
 $linkActive   = $linkBase . ' bg-slate-900 text-white hover:bg-slate-800';
@@ -53,6 +57,13 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
 
             <!-- TODO: substitua este item pelo(s) módulo(s) do seu projeto -->
             <!-- [HOOK_SIDEBAR] -->
+    <li>
+        <a href="<?= htmlspecialchars($urlProduto) ?>"
+            class="<?= $activeProduto ? $linkActive : $linkInactive ?>">
+            <i class="fa-solid fa-box text-base"></i>
+            <span>Produtos</span>
+        </a>
+    </li>
             <li>
                 <a href="<?= htmlspecialchars($urlExemplo) ?>"
                     class="<?= $activeExemplo ? $linkActive : $linkInactive ?>">
