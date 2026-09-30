@@ -1,0 +1,14 @@
+<?php
+
+declare(strict_types=1);
+
+use Src\App\Http\Controllers\{{Modulo}}Controller;
+use Src\App\Http\Middleware\AuthMiddleware;
+
+// Rotas do módulo: {{Modulo}}
+$router->get('/{{ModuloLower}}', [{{Modulo}}Controller::class, 'index'], [AuthMiddleware::class]);
+$router->get('/{{ModuloLower}}/criar', [{{Modulo}}Controller::class, 'criar'], [AuthMiddleware::class]);
+$router->get('/{{ModuloLower}}/editar', [{{Modulo}}Controller::class, 'editar'], [AuthMiddleware::class]);
+$router->post('/{{ModuloLower}}/salvar', [{{Modulo}}Controller::class, 'salvar'], [AuthMiddleware::class]);
+$router->post('/{{ModuloLower}}/atualizar', [{{Modulo}}Controller::class, 'atualizar'], [AuthMiddleware::class]);
+$router->post('/{{ModuloLower}}/deletar', [{{Modulo}}Controller::class, 'deletar'], [AuthMiddleware::class]);

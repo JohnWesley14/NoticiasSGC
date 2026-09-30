@@ -1,0 +1,109 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Src\App\Infrastructure\Repositories;
+
+use PDO;
+use Src\App\Infrastructure\IRepositories\I{{Modulo}}Repository;
+use Src\App\Models\{{Modulo}};
+use Src\Core\Database;
+
+class {{Modulo}}Repository implements I{{Modulo}}Repository
+{
+    private PDO $conn;
+
+    public function __construct(Database $conn)
+    {
+        $this->conn = $conn->getConnection();
+    }
+
+    public function create({{Modulo}} ${{ModuloVariavel}}): {{Modulo}}
+    {
+        $sql = 'INSERT INTO tb_{{ModuloSnake}} (id, titulo, descricao, status, created_at, updated_at)
+                VALUES (:id, :titulo, :descricao, :status, :created_at, :updated_at)';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', ${{ModuloVariavel}}->getId(), PDO::PARAM_STR);
+        $stmt->bindValue(':titulo', ${{ModuloVariavel}}->getTitulo());
+        $stmt->bindValue(':descricao', ${{ModuloVariavel}}->getDescricao());
+        $stmt->bindValue(':status', ${{ModuloVariavel}}->getStatus(), PDO::PARAM_BOOL);
+        $stmt->bindValue(':created_at', ${{ModuloVariavel}}->getCreatedAt());
+        $stmt->bindValue(':updated_at', ${{ModuloVariavel}}->getUpdatedAt());
+        $stmt->execute();
+
+        return ${{ModuloVariavel}};
+    }
+
+    public function update({{Modulo}} ${{ModuloVariavel}}): {{Modulo}}
+    {
+        $sql = 'UPDATE tb_{{ModuloSnake}}
+                SET titulo = :titulo, descricao = :descricao,
+                    status = :status, updated_at = :updated_at
+                WHERE id = :id';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':titulo', ${{ModuloVariavel}}->getTitulo());
+        $stmt->bindValue(':descricao', ${{ModuloVariavel}}->getDescricao());
+        $stmt->bindValue(':status', ${{ModuloVariavel}}->getStatus(), PDO::PARAM_BOOL);
+        $stmt->bindValue(':updated_at', ${{ModuloVariavel}}->getUpdatedAt());
+        $stmt->bindValue(':id', ${{ModuloVariavel}}->getId(), PDO::PARAM_STR);
+        $stmt->execute();
+
+        return ${{ModuloVariavel}};
+    }
+
+    public function getAll(): array
+    {
+        $sql = 'SELECT id, titulo, descricao, status FROM tb_{{ModuloSnake}} ORDER BY id DESC';
+        $stmt = $this->conn->query($sql);
+        $itens = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $itens[] = new {{Modulo}}(
+                $row['titulo'],
+                $row['descricao'],
+                (bool) $row['status'],
+                null,
+                null,
+                $row['id']
+            );
+        }
+
+        return $itens;
+    }
+
+    public function getById(string $id): ?{{Modulo}}
+    {
+        $sql = 'SELECT * FROM tb_{{ModuloSnake}} WHERE id = :id';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return new {{Modulo}}(
+                $row['titulo'],
+                $row['descricao'],
+                (bool) $row['status'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['id']
+            );
+        }
+
+        return null;
+    }
+
+    public function delete(string $id): bool
+    {
+        $sql = 'DELETE FROM tb_{{ModuloSnake}} WHERE id = :id';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
+    public function count(): int
+    {
+        $stmt = $this->conn->query('SELECT COUNT(*) FROM tb_{{ModuloSnake}}');
+        return (int) $stmt->fetchColumn();
+    }
+}

@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Src\App\Infrastructure\IRepositories;
+
+use Src\App\Models\{{Modulo}};
+
+interface I{{Modulo}}Repository
+{
+    public function create({{Modulo}} ${{ModuloVariavel}}): {{Modulo}};
+    public function update({{Modulo}} ${{ModuloVariavel}}): {{Modulo}};
+    public function delete(string $id): bool;
+    public function getAll(): array;
+    public function getById(string $id): ?{{Modulo}};
+    public function count(): int;
+}

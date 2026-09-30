@@ -1,0 +1,146 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Src\App\Http\Controllers;
+
+use Src\App\Http\Exceptions\{{Modulo}}\{{Modulo}}Exception;
+use Src\App\Http\Requests\{{Modulo}}Request;
+use Src\App\Services\IServices\I{{Modulo}}Service;
+use Src\App\Utils\Toast;
+use Src\App\Utils\Url;
+use Src\App\Utils\View;
+use Src\Core\Logger;
+
+class {{Modulo}}Controller extends SharedController
+{
+    public function __construct(
+        private I{{Modulo}}Service ${{ModuloVariavel}}Service
+    ) {
+    }
+
+    public function index(): string
+    {
+        try {
+            $itens = $this->{{ModuloVariavel}}Service->getAll();
+            $content = View::render('{{Modulo}}/index', [
+                'itens'      => $itens,
+                'voltarUrl'  => Url::path('/home'),
+                'urlCriar'   => Url::path('/{{ModuloLower}}/criar'),
+                'editarUrl'  => Url::path('/{{ModuloLower}}/editar'),
+                'deletarUrl' => Url::path('/{{ModuloLower}}/deletar'),
+            ]);
+
+            return self::getPage('{{ModuloUpper}} - LISTAGEM', $content, [
+                'showSidebar' => true,
+                'bodyClass'   => '{{ModuloLower}}-page',
+                'activePage'  => '{{ModuloLower}}',
+            ]);
+        } catch ({{Modulo}}Exception $e) {
+            Toast::error($e->getMessage());
+            Logger::error($e->getMessage());
+            Url::redirect('/home');
+        }
+    }
+
+    public function criar(): string
+    {
+        $content = View::render('{{Modulo}}/criar', [
+            'voltarUrl' => Url::path('/{{ModuloLower}}'),
+            'urlSalvar' => Url::path('/{{ModuloLower}}/salvar'),
+        ]);
+
+        return self::getPage('{{ModuloUpper}} - NOVO REGISTRO', $content, [
+            'showSidebar' => true,
+            'bodyClass'   => '{{ModuloLower}}-page',
+            'activePage'  => '{{ModuloLower}}',
+        ]);
+    }
+
+    public function editar(): string
+    {
+        $id = trim((string) filter_input(INPUT_GET, 'id'));
+
+        if ($id === '') {
+            Toast::error('ID inválido.');
+            Url::redirect('/{{ModuloLower}}');
+        }
+
+        try {
+            $item = $this->{{ModuloVariavel}}Service->getById($id);
+
+            if ($item === null) {
+                Toast::error('Registro não encontrado.');
+                Url::redirect('/{{ModuloLower}}');
+            }
+
+            $content = View::render('{{Modulo}}/editar', [
+                'voltarUrl' => Url::path('/{{ModuloLower}}'),
+                'urlSalvar' => Url::path('/{{ModuloLower}}/atualizar'),
+                'item'      => $item,
+            ]);
+
+            return self::getPage('{{ModuloUpper}} - EDITAR REGISTRO', $content, [
+                'showSidebar' => true,
+                'bodyClass'   => '{{ModuloLower}}-page',
+                'activePage'  => '{{ModuloLower}}',
+            ]);
+        } catch ({{Modulo}}Exception $e) {
+            Toast::error($e->getMessage());
+            Logger::error($e->getMessage());
+            Url::redirect('/{{ModuloLower}}');
+        }
+    }
+
+    public function salvar(): never
+    {
+        try {
+            $request = (new {{Modulo}}Request($_POST))->redirectOnFail();
+            $validated = $request->validated();
+
+            $this->{{ModuloVariavel}}Service->create($validated);
+            Toast::success('Registro criado com sucesso!');
+            Url::redirect('/{{ModuloLower}}');
+        } catch ({{Modulo}}Exception $e) {
+            Toast::error($e->getMessage());
+            Logger::error($e->getMessage());
+            Url::redirect('/{{ModuloLower}}');
+        }
+    }
+
+    public function atualizar(): void
+    {
+        try {
+            $request = (new {{Modulo}}Request($_POST))->redirectOnFail();
+            $validated = $request->validated();
+
+            $this->{{ModuloVariavel}}Service->update((string) $validated['id'], $validated);
+            Toast::success('Registro atualizado com sucesso!');
+            Url::redirect('/{{ModuloLower}}');
+        } catch ({{Modulo}}Exception $e) {
+            Toast::error($e->getMessage());
+            Logger::error($e->getMessage());
+            Url::redirect('/{{ModuloLower}}/editar?id=' . ($_POST['id'] ?? ''));
+        }
+    }
+
+    public function deletar(): void
+    {
+        $id = trim((string) filter_input(INPUT_POST, 'id'));
+
+        if ($id === '') {
+            Toast::error('ID inválido.');
+            Url::redirect('/{{ModuloLower}}');
+        }
+
+        try {
+            $this->{{ModuloVariavel}}Service->delete($id);
+            Toast::success('Registro deletado com sucesso!');
+            Url::redirect('/{{ModuloLower}}');
+        } catch ({{Modulo}}Exception $e) {
+            Toast::error($e->getMessage());
+            Logger::error($e->getMessage());
+            Url::redirect('/{{ModuloLower}}');
+        }
+    }
+}

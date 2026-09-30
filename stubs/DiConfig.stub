@@ -1,0 +1,21 @@
+<?php
+
+use Src\App\Http\Controllers\{{Modulo}}Controller;
+use Src\App\Infrastructure\IRepositories\I{{Modulo}}Repository;
+use Src\App\Infrastructure\Repositories\{{Modulo}}Repository;
+use Src\App\Services\{{Modulo}}Service;
+use Src\App\Services\IServices\I{{Modulo}}Service;
+use Src\Core\Container;
+use Src\Core\Database;
+
+Container::set(I{{Modulo}}Repository::class, fn() =>
+    new {{Modulo}}Repository(Container::get(Database::class))
+);
+
+Container::set(I{{Modulo}}Service::class, fn() =>
+    new {{Modulo}}Service(Container::get(I{{Modulo}}Repository::class))
+);
+
+Container::set({{Modulo}}Controller::class, fn() =>
+    new {{Modulo}}Controller(Container::get(I{{Modulo}}Service::class))
+);

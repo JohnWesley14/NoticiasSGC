@@ -12,6 +12,8 @@ $urlExemplo   = $urlExemplo ?? '';
 $urlConfig    = $urlConfig ?? '';
 $urlLogout    = $urlLogout ?? '';
 
+// [HOOK_SIDEBAR_DEFAULTS]
+
 $linkBase     = 'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors';
 $linkActive   = $linkBase . ' bg-slate-900 text-white hover:bg-slate-800';
 $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate-900';
@@ -50,6 +52,7 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
             <?php endif; ?>
 
             <!-- TODO: substitua este item pelo(s) módulo(s) do seu projeto -->
+            <!-- [HOOK_SIDEBAR] -->
             <li>
                 <a href="<?= htmlspecialchars($urlExemplo) ?>"
                     class="<?= $activeExemplo ? $linkActive : $linkInactive ?>">

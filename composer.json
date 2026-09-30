@@ -26,5 +26,9 @@
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "scripts": {
+    "criar": "php bin/make-modulo.php",
+    "remover": "php bin/remove-modulo.php"
   }
 }
