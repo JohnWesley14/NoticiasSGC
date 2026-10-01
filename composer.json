@@ -29,6 +29,7 @@
   },
   "scripts": {
     "criar": "php bin/make-modulo.php",
-    "remover": "php bin/remove-modulo.php"
+    "remover": "php bin/remove-modulo.php",
+    "metodo": "php bin/make-method.php"
   }
 }
